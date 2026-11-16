@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kiki-core</title>
+<link rel="icon" href="/logo.svg">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <div class="brand"><img src="/logo.svg" alt=""><span>kiki<b>-core</b></span></div>
+
+    <button id="new-meeting" class="primary wide">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.6" class="dot"/><circle cx="19.4" cy="16.2" r="1.6" class="dot"/><circle cx="4.6" cy="16.2" r="1.6" class="dot"/></svg>
+      Start a meeting
+    </button>
+
+    <div class="sec"><span>Team</span><button id="add-agent" class="icon" title="New agent"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <nav id="agents"></nav>
+
+    <div class="sec"><span>Meetings</span></div>
+    <nav id="meetings"></nav>
+
+    <button id="open-settings" class="ghost wide settings-btn">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>
+      <span id="model-label">Settings</span>
+    </button>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<dialog id="dlg"><form method="dialog" id="dlg-body"></form></dialog>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
