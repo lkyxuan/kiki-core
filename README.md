@@ -5,12 +5,12 @@
 ![kiki-core meeting](docs/meeting.png)
 
 ```bash
-npx kiki-core
+npx github:lkyxuan/kiki-core
 ```
 
 Your browser opens. Paste an API key (DeepSeek, OpenAI, OpenRouter, a local Ollama, or anything OpenAI-compatible) and you're in. No account, no Claude Code, no cloud.
 
-Want to look around first? `KIKI_MOCK=1 npx kiki-core` runs with canned replies and no key.
+Want to look around first? `KIKI_MOCK=1 npx github:lkyxuan/kiki-core` runs with canned replies and no key.
 
 ## What it does
 
