@@ -1,0 +1,45 @@
+# Publish to npm with Trusted Publishing (no token): when package.json changes on main and its version is not on npm yet, publish it.
+# To release: change the code, bump "version" in package.json, merge to main. Same version = nothing happens.
+# One-time setup: npmjs.com package Settings -> Trusted Publisher -> GitHub Actions, this repo, workflow file npm-publish.yml.
+name: npm publish
+
+on:
+  push:
+    branches: [main]
+    paths: ["package.json"]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Trusted Publishing uses GitHub's OIDC identity, no NPM_TOKEN
+  contents: read
+
+concurrency: npm-publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # ships npm 11.5.1+, required for Trusted Publishing
+          registry-url: https://registry.npmjs.org
+      - name: Is this version on npm already?
+        id: v
+        run: |
+          name=$(node -p "require('./package.json').name")
+          ver=$(node -p "require('./package.json').version")
+          if npm view "$name@$ver" version >/dev/null 2>&1; then
+            echo "$name@$ver is already on npm, skipping"; echo "skip=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "publishing $name@$ver"; echo "skip=0" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Test
+        if: steps.v.outputs.skip == '0'
+        run: npm test
+      - name: Publish
+        if: steps.v.outputs.skip == '0'
+        run: npm publish --access public
